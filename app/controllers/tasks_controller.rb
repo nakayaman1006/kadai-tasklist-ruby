@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   end
     
   def show
-    if Task.find_by(id: params[:id]).nil?
+    if Task.find_by(id: params[:id]).nil? or !logged_in?
       redirect_to root_url
     elsif  current_user.id == Task.find_by(id: params[:id]).user_id
       @task = Task.find(params[:id])
