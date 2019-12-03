@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   #before_action を使用し、set_taskメソッドを
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:edit, :update, :destroy]
   
   #TasksController の全アクションはログインが必須
   before_action :require_user_logged_in, except: [:show]
@@ -60,7 +60,7 @@ private
 
   # 共通化可能な箇所をまとめる
   def set_task
-    @task = Task.find_by(params[:id])
+    @task = Task.find(params[:id])
   end 
 
   # Strong Parameter
