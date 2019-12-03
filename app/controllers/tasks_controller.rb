@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   #TasksController の全アクションはログインが必須
-  before_action :require_user_logged_in
+  before_action :require_user_logged_in, except: [:show]
   
   
   def index
@@ -11,6 +11,10 @@ class TasksController < ApplicationController
   end
     
   def show
+    if logged_in? and current_user.id == @task.user_id
+    else
+      redirect_to root_url
+    end
   end
 
   def new
@@ -53,7 +57,7 @@ private
 
   # 共通化可能な箇所をまとめる
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(params[:id])
   end 
 
   # Strong Parameter
