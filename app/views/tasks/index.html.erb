@@ -1,9 +1,20 @@
-<h1>タスク一覧 (ID : タスク : ステータス)</h1>
+<% if logged_in? %>
 
-<ul>
-  <% @tasks.each do |task| %>
-    <li><%= link_to task.id, task_path(task) %> : <%= task.content %> : <%= task.status%></li>
-  <% end %>
-</ul>
-
-<%= link_to 'タスクの新規登録', new_task_path %>
+  <h1>タスク一覧 (ID : タスク : ステータス)</h1>
+  
+  <ul>
+    <% @tasks.each do |task| %>
+      <li><%= link_to task.id, task_path(task) %> : <%= task.content %> : <%= task.status%></li>
+    <% end %>
+  </ul>
+  
+  <%= link_to 'タスクの新規登録', new_task_path %>
+  
+  
+  
+  <br><br><br>
+  <%= current_user.name  %>様専用 タスク管理 <br>
+  <%= link_to 'ログアウト', logout_path, method: :delete %></li>
+<% else %>
+  <%= render :tasks %>
+<% end %>

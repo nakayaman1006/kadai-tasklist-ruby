@@ -2,8 +2,12 @@ class TasksController < ApplicationController
   #before_action を使用し、set_taskメソッドを
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
+  #TasksController の全アクションはログインが必須
+  before_action :require_user_logged_in
+  
+  
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks.order(id: :desc)
   end
     
   def show
@@ -14,7 +18,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     
     if @task.save
       flash[:success] = 'タスクが正常に登録されました'
